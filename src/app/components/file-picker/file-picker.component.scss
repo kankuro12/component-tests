@@ -1,0 +1,36 @@
+.file-picker-wrapper{
+
+  width: 100%;
+  height: 150px;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+
+  transition: all 0.3s ease;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:hover{
+    border-color: #333;
+  }
+
+  img{
+    height: 100%;
+  }
+
+  label{
+    position: absolute;
+    //at center of parent
+    top: 50%;
+    left: 50%;
+    cursor: pointer;
+    transform: translate(-50%, -50%);
+  }
+
+
+}

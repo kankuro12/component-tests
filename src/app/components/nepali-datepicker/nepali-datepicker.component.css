@@ -1,0 +1,37 @@
+/* Style for the custom input wrapper */
+.input-wrapper {
+  position: relative;
+  display: inline-block;
+  margin: 20px;
+}
+
+.custom-input {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 200px;
+  cursor: pointer;
+}
+
+/* Style for the dialog overlay */
+.dialog-overlay {
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Style for the dialog box */
+.dialog-box {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  text-align: center;
+}

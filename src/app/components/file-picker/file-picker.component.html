@@ -1,0 +1,7 @@
+<div class="file-picker-wrapper">
+  <img src="#" alt="File Preview" [src]="preview" *ngIf="preview" />
+  <label >
+    <span>{{label}}</span>
+    <input type="file" (change)="fileChanged($event)" [accept]="accept" style="display: none;" />
+  </label>
+</div>
