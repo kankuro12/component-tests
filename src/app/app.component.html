@@ -14,7 +14,7 @@
 <hr>
 <div class="row">
   <div class="col-md-3">
-    <app-selectc [items]="cities" [(selectedValue)]="selectedCityId" [pagination]="true"></app-selectc>
+    <app-selectc [items]="cities" [(selectedValue)]="selectedCityId" [pagination]="true" #citiesSelector ></app-selectc>
 
   </div>
   <div class="col-md-3">
@@ -28,6 +28,7 @@
   </div>
 </div>
 
+<button (click)="openSelect()">asd</button>
 <!-- <div *ngFor="let city of cities;">
   <button (click)="selectedCityId=city.id">{{city.text}}</button>
 </div> -->

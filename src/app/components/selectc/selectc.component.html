@@ -4,7 +4,7 @@
   <div class="select-modal select-aa" [class.active]="modalShown" (click)="modalClicked($event)">
 
     <div class="select-modal-inner"[style]="modalPosition">
-        <input type="text" class="modal-input" onkeydown="inputKeyDown($event)" [id]="id+'input'"  (input)="query($event)" [placeholder]="placeholder">
+        <input type="text" class="modal-input" (keydown)="inputKeyDown($event)" [id]="id+'input'"  (input)="query($event)" [placeholder]="placeholder">
         <div class="select-option-holder" (scroll)="onScroll($event)">
           <div class="modal-list" *ngIf="!pagination">
             <div class="modal-item" *ngFor="let item of queryResult" (click)="selectItem(item.id)">
@@ -12,7 +12,7 @@
             </div>
           </div>
           <div class="modal-list" *ngIf="pagination">
-            <div class="modal-item" *ngFor="let item of showResult" [class.selected]="item.id === selectedValue" (click)="selectItem(item.id)">
+            <div class="modal-item"  *ngFor="let item of showResult; let i = index" [class.current]="i==currentIndex" [class.selected]="item.id === selectedValue" [id]="id+'-item-'+i" (click)="selectItem(item.id)">
               {{item.text}}
             </div>
           </div>

@@ -18,6 +18,7 @@ export class SelectcComponent {
       this.totalItems = this.queryResult.length;
       this.pages = Array.from({length: Math.ceil(this.totalItems / this.pageSize)}, (_, i) => this.queryResult.slice(i * this.pageSize, i * this.pageSize + this.pageSize));
       this.showResult = [];
+      this.currentIndex= -1;
       if(this.pages.length > 0){
         this.showResult = this.pages[0];
         if(this.pages.length > 1){
@@ -29,7 +30,7 @@ export class SelectcComponent {
       }
     }
   };
-  @Input() pagination = false;
+  @Input() pagination = true;
   @Input() pageSize = 10;
   @Input() currentPage = 1;
   @Input() totalItems = 0;
@@ -50,6 +51,7 @@ export class SelectcComponent {
   modalShown = false;
   top = 0;
   left = 0;
+  currentIndex=-1;
   id="selectc"+Math.random().toString(36).substring(7);
   modalPosition = 'left:0px;top:0px;';
 
@@ -90,11 +92,11 @@ export class SelectcComponent {
 
   selectItem(id:any){
     this.selectedValue = id;
-    this.modalShown=false;
+    this.closeModal();
   }
 
   public open(){
-    this.modalShown = true;
+    this.showModal();
   }
 
   onScroll(event:any){
@@ -113,6 +115,7 @@ export class SelectcComponent {
   }
 
   showModal(){
+    this.queryData('');
     this.modalShown=true;
     setTimeout(() => {
       const element = document.querySelector('#'+this.id);
@@ -131,15 +134,72 @@ export class SelectcComponent {
     });
   }
 
+  closeModal(){
+    this.modalShown = false;
+    this.clearQueryData();
+    const inputElement = document.getElementById(this.id+'input') as HTMLInputElement;
+    if (inputElement) {
+      inputElement.value = '';
+    }
+  }
+
+  clearQueryData(){
+    this.queryResult = [];
+    this.pages = [];
+    this.showResult = [];
+    this.currentPage = 1;
+    this.totalItems = 0;
+
+  }
+
   modalClicked(event : any){
     console.log(event.target.className);
 
     if(event.target.className === 'select-modal select-aa active'){
-      this.modalShown = false;
+      this.closeModal();
     }
 
   }
 
+  inputKeyDown(event: any){
+    if(event.key === 'Escape' || event.key === 'Tab'){
+      event.preventDefault();
+      event.stopPropagation();
+      this.closeModal();
+    }
+    if (event.key === 'ArrowDown') {
+      event.preventDefault();
+      if (this.showResult.length > 0 && this.currentIndex < this.showResult.length - 1) {
+        this.currentIndex += 1;
+      }
+      this.scrollToItem();
+    } else if (event.key === 'ArrowUp' ) {
+      event.preventDefault();
+      if(this.currentIndex > 0){
+        this.currentIndex -= 1;
+      }
+      this.scrollToItem();
+
+    } else if (event.key === 'Enter') {
+      if (this.currentIndex >= 0 && this.currentIndex < this.showResult.length) {
+        this.selectItem(this.showResult[this.currentIndex].id);
+      }
+    }
+    // Add this method to the class to handle scrolling to the selected item
+  }
+
+  timeOut : any = null;
+  private scrollToItem() {
+    if(this.timeOut){
+      clearTimeout(this.timeOut);
+    }
+    this.timeOut =setTimeout(() => {
+      const selectedElement = document.querySelector(`#${this.id}-item-${this.currentIndex}`);
+      if (selectedElement) {
+        selectedElement.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      }
+    },300);
+  }
 
 
 

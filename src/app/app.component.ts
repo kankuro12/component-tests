@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, viewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { NepaliDatepickerComponent } from './components/nepali-datepicker/nepali-datepicker.component';
 import { getCurrentBS } from './components/nepali-datepicker/calendar-data';
@@ -17,6 +17,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
+  @ViewChild('citiesSelector') citiesSelector: SelectcComponent | null = null;
   file : File | null = null;
   selectedCityId : number | null  = null;
   cities:any[] = [];
@@ -45,6 +46,14 @@ export class AppComponent {
     console.log(this.cities.find(city => city.id === this.selectedCityId));
 
   }
+
+  openSelect(){
+    if(this.citiesSelector){
+      this.citiesSelector.open();
+    }
+  }
+
+
 
 
 

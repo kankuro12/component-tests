@@ -43,6 +43,9 @@
           &.selected{
             background-color: #2bbfff;
           }
+          &.current{
+            background-color: #b5b5b5;
+          }
         }
       }
 
