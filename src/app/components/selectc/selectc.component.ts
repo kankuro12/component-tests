@@ -190,15 +190,11 @@ export class SelectcComponent {
 
   timeOut : any = null;
   private scrollToItem() {
-    if(this.timeOut){
-      clearTimeout(this.timeOut);
+    const selectedElement = document.querySelector(`#${this.id}-item-${this.currentIndex}`);
+    if (selectedElement) {
+      selectedElement.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
     }
-    this.timeOut =setTimeout(() => {
-      const selectedElement = document.querySelector(`#${this.id}-item-${this.currentIndex}`);
-      if (selectedElement) {
-        selectedElement.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
-      }
-    },300);
+
   }
 
 
