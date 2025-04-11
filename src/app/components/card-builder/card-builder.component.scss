@@ -1,0 +1,59 @@
+.card-builder{
+  .br-0{
+    border-radius: 0 !important;
+  }
+  label{
+    font-weight:500 ;
+    margin-bottom: 5px;
+  }
+  /* Custom scrollbar styles */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 0px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+  &>div{
+    height: 100vh;
+    overflow: auto;
+  }
+  .left-section{
+    width:300px;
+    background-color: aquamarine;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+  }
+
+  .right-section{
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 300px;
+    background-color: rgb(255, 255, 255);
+    border-left: 1px solid #ccc;
+  }
+
+  .center-section{
+    position: fixed ;
+    top: 0;
+    left: 300px;
+    right: 300px;
+    bottom: 0;
+    background-color: white
+  }
+}

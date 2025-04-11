@@ -1,0 +1,90 @@
+<div class="card-builder">
+  <div class="left-section">
+
+  </div>
+  <div class="center-section">
+    <div id="canvas" [style]="card.toCss()">
+asdfasd
+    </div>
+  </div>
+  <div class="right-section">
+    <div class="tabs">
+      <button class="btn br-0" [ngClass]="{ ' btn-primary': activeTab === 'cardDetail' }" (click)="activeTab = 'cardDetail'">Card Detail</button>
+      <button class="btn br-0" [ngClass]="{ ' btn-primary': activeTab === 'elementProperty' }" (click)="activeTab = 'elementProperty'">Properties</button>
+    </div>
+    <hr class="m-0">
+    <div *ngIf="activeTab=='cardDetail'" id="card-detail-editor" class="p-3">
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group mb-2">
+            <label for="title">Title:</label>
+            <input type="text" id="title" [(ngModel)]="card.title" class="form-control">
+          </div>
+
+        </div>
+        <div class="col-md-6">
+          <div class="form-group mb-2">
+            <label for="height">Height:</label>
+            <input type="text" id="height" [(ngModel)]="card.height" class="form-control">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group mb-2">
+            <label for="width">Width:</label>
+            <input type="text" id="width" [(ngModel)]="card.width" class="form-control">
+          </div>
+
+        </div>
+      </div>
+
+
+      <div class="form-group mb-2">
+        <label for="backgroundType">Background Type:</label>
+        <select id="backgroundType" [(ngModel)]="card.backgroundType" class="form-control">
+          <option value="color">Color</option>
+          <option value="image">Image</option>
+        </select>
+      </div>
+
+      <div class="form-group mb-2" *ngIf="card.backgroundType === 'color'">
+        <label for="backgroundColor">Background Color:</label>
+        <input type="color" id="backgroundColor" [(ngModel)]="card.backgroundColor" class="form-control form-control-color">
+      </div>
+
+      <div *ngIf="card.backgroundType === 'image'">
+        <div class="form-group mb-2">
+          <label for="backgroundImage">Background Image URL:</label>
+          <input type="text" id="backgroundImage" [(ngModel)]="card.backgroundImage" class="form-control">
+        </div>
+
+        <div class="form-group mb-2">
+          <label for="backgroundImagePosition">Image Position:</label>
+          <select id="backgroundImagePosition" [(ngModel)]="card.backgroundImagePosition" class="form-control">
+            <option value="left">Left</option>
+            <option value="center">Center</option>
+            <option value="right">Right</option>
+          </select>
+        </div>
+
+        <div class="form-group mb-2">
+          <label for="backgroundImageSize">Image Size:</label>
+          <select id="backgroundImageSize" [(ngModel)]="card.backgroundImageSize" class="form-control">
+            <option value="cover">Cover</option>
+            <option value="contain">Contain</option>
+          </select>
+        </div>
+
+        <div class="form-group mb-2">
+          <label for="backgroundImageRepeat">Image Repeat:</label>
+          <select id="backgroundImageRepeat" [(ngModel)]="card.backgroundImageRepeat" class="form-control">
+            <option value="no-repeat">No Repeat</option>
+            <option value="repeat">Repeat</option>
+          </select>
+        </div>
+      </div>
+
+
+
+    </div>
+  </div>
+</div>

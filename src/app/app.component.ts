@@ -9,10 +9,11 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
 import { SelectcComponent } from './components/selectc/selectc.component';
 import { CommonModule } from '@angular/common';
+import { CardBuilderComponent } from './components/card-builder/card-builder.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, NepaliDatepickerComponent,FilePickerComponent,NgSelectModule,FormsModule,SelectcComponent,CommonModule],
+  imports: [NgSelectModule,FormsModule,CommonModule,CardBuilderComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
