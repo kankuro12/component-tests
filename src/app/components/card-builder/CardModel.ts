@@ -1,7 +1,17 @@
-export const CardElementTypes =[
 
-  'id','name','address','grade','section','rollno'
-];
+export class studentCardModel  {
+  id: string = 'id';
+  name: string = 'name';
+  address: string = 'address';
+  grade: string = 'grade';
+  section: string = 'section';
+  rollNo: string = 'rollNo';
+  imageUrl: string = 'https://plus.unsplash.com/premium_photo-1664474619075-644dd191935f?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8aW1hZ2V8ZW58MHx8MHx8fDA%3D';
+
+  getData(key:String) {
+    return this[key as keyof studentCardModel];
+  }
+}
 export class CardElement{
   name: string = 'Card Element';
   type: 'text' | 'image' | 'barcode' = 'text';
@@ -14,13 +24,33 @@ export class CardElement{
   height: number = 100;
 
   text: string = 'Sample Text';
-  dataValue : string = 'Sample Data'; // for dynamic data
-  elementType: string | null = null;// Type from the CardElementTypes array
+  dataField : string = 'id'; // for dynamic data
 
   fontSize: number = 16;
   fontFamily: string = 'Arial';
   fontColor: string = '#000000';
   fontWeight: 'normal' | 'bold' = 'normal';
+
+  data : studentCardModel = new studentCardModel();
+
+  getImageUrl(){
+    return this.dataType === 'static' ? this.text : this.data.getData(this.dataField);
+  }
+
+  toCss() {
+    let css = `
+      position: absolute;
+      left: ${this.positionX}px;
+      top: ${this.positionY}px;
+      width: ${this.width}px;
+      height: ${this.height}px;
+      font-size: ${this.fontSize}px;
+      font-family: ${this.fontFamily};
+      color: ${this.fontColor};
+      font-weight: ${this.fontWeight};
+    `;
+    return css;
+  }
 
 }
 
@@ -28,23 +58,23 @@ export class CardModel {
   title: string = 'Card Title';
   //background details
   backgroundType: 'color'| 'image' = 'color'; // color or image
-  backgroundColor : string = '#ffffff';
+  backgroundColor : string = '#D6D6D6';
   backgroundImage : string = '';
 
   backgroundImagePosition : 'left' | 'center' | 'right' = 'center';
   backgroundImageSize : 'cover' | 'contain' = 'cover';
   backgroundImageRepeat : 'no-repeat' | 'repeat' = 'no-repeat';
 
-  height: string = '200px';
-  width: string = '300px';
+  height: number = 200;
+  width: number = 300;
 
   elements: CardElement[] = [];
 
   toCss() {
     let css = `
       background-color: ${this.backgroundColor};
-      width: ${this.width};
-      height: ${this.height};
+      width: ${this.width}px;
+      height: ${this.height}px;
       ${
         this.backgroundType === 'color' ? `background: ${this.backgroundColor};`
         :
@@ -57,6 +87,10 @@ export class CardModel {
       }
     `;
     return css;
+  }
+
+  toJson() {
+    return JSON.stringify(this, null, 2);
   }
 
 }

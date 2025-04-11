@@ -1,16 +1,48 @@
 <div class="card-builder">
   <div class="left-section">
 
+    <div class="row m-0">
+      <div class="col-6">
+        <div class="input-card">
+          <div class="input-item" (click)="addElement('text')">
+            <i class="bi bi-type h4"></i>
+            <span>Text</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="input-card">
+          <div class="input-item" (click)="addElement('image')">
+            <i class="bi bi-image h4"></i>
+            <span>Image</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="input-card">
+          <div class="input-item" (click)="addElement('barcode')">
+            <i class="bi bi-upc-scan h4"></i>
+            <span>BarCode</span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="center-section">
     <div id="canvas" [style]="card.toCss()">
-asdfasd
+      <div appDraggable *ngFor="let element of card.elements" [style]="element.toCss()" (click)="selectElement(element)"
+        class="card-element" [ngClass]="{ 'selected': cardElement === element }" (dragEnd)="onDragEnd($event, element)">
+        <div *ngIf="element.type === 'text'">{{ element.text }}</div>
+        <img *ngIf="element.type === 'image'" [src]="element.getImageUrl()" [alt]="element.getImageUrl()" />
+      </div>
     </div>
   </div>
   <div class="right-section">
     <div class="tabs">
-      <button class="btn br-0" [ngClass]="{ ' btn-primary': activeTab === 'cardDetail' }" (click)="activeTab = 'cardDetail'">Card Detail</button>
-      <button class="btn br-0" [ngClass]="{ ' btn-primary': activeTab === 'elementProperty' }" (click)="activeTab = 'elementProperty'">Properties</button>
+      <button class="btn br-0" [ngClass]="{ ' btn-primary': activeTab === 'cardDetail' }"
+        (click)="activeTab = 'cardDetail'">Card Detail</button>
+      <button class="btn br-0" [ngClass]="{ ' btn-primary': activeTab === 'elementProperty' }"
+        (click)="activeTab = 'elementProperty'">Properties</button>
     </div>
     <hr class="m-0">
     <div *ngIf="activeTab=='cardDetail'" id="card-detail-editor" class="p-3">
@@ -18,20 +50,20 @@ asdfasd
         <div class="col-12">
           <div class="form-group mb-2">
             <label for="title">Title:</label>
-            <input type="text" id="title" [(ngModel)]="card.title" class="form-control">
+            <input type="text" id="title" [(ngModel)]="card.title" (ngModelChange)="cardUpdated()" class="form-control">
           </div>
 
         </div>
         <div class="col-md-6">
           <div class="form-group mb-2">
             <label for="height">Height:</label>
-            <input type="text" id="height" [(ngModel)]="card.height" class="form-control">
+            <input type="number" id="height" [(ngModel)]="card.height" (ngModelChange)="cardUpdated()" class="form-control">
           </div>
         </div>
         <div class="col-md-6">
           <div class="form-group mb-2">
             <label for="width">Width:</label>
-            <input type="text" id="width" [(ngModel)]="card.width" class="form-control">
+            <input type="number" id="width" [(ngModel)]="card.width" (ngModelChange)="cardUpdated()" class="form-control">
           </div>
 
         </div>
@@ -40,7 +72,7 @@ asdfasd
 
       <div class="form-group mb-2">
         <label for="backgroundType">Background Type:</label>
-        <select id="backgroundType" [(ngModel)]="card.backgroundType" class="form-control">
+        <select id="backgroundType" [(ngModel)]="card.backgroundType" (ngModelChange)="cardUpdated()" class="form-control">
           <option value="color">Color</option>
           <option value="image">Image</option>
         </select>
@@ -48,18 +80,19 @@ asdfasd
 
       <div class="form-group mb-2" *ngIf="card.backgroundType === 'color'">
         <label for="backgroundColor">Background Color:</label>
-        <input type="color" id="backgroundColor" [(ngModel)]="card.backgroundColor" class="form-control form-control-color">
+        <input type="color" id="backgroundColor" [(ngModel)]="card.backgroundColor" (ngModelChange)="cardUpdated()"
+          class="form-control form-control-color">
       </div>
 
       <div *ngIf="card.backgroundType === 'image'">
         <div class="form-group mb-2">
           <label for="backgroundImage">Background Image URL:</label>
-          <input type="text" id="backgroundImage" [(ngModel)]="card.backgroundImage" class="form-control">
+          <input type="text" id="backgroundImage" [(ngModel)]="card.backgroundImage" (ngModelChange)="cardUpdated()" class="form-control">
         </div>
 
         <div class="form-group mb-2">
           <label for="backgroundImagePosition">Image Position:</label>
-          <select id="backgroundImagePosition" [(ngModel)]="card.backgroundImagePosition" class="form-control">
+          <select id="backgroundImagePosition" [(ngModel)]="card.backgroundImagePosition" (ngModelChange)="cardUpdated()" class="form-control">
             <option value="left">Left</option>
             <option value="center">Center</option>
             <option value="right">Right</option>
@@ -68,7 +101,7 @@ asdfasd
 
         <div class="form-group mb-2">
           <label for="backgroundImageSize">Image Size:</label>
-          <select id="backgroundImageSize" [(ngModel)]="card.backgroundImageSize" class="form-control">
+          <select id="backgroundImageSize" [(ngModel)]="card.backgroundImageSize" (ngModelChange)="cardUpdated()" class="form-control">
             <option value="cover">Cover</option>
             <option value="contain">Contain</option>
           </select>
@@ -76,7 +109,7 @@ asdfasd
 
         <div class="form-group mb-2">
           <label for="backgroundImageRepeat">Image Repeat:</label>
-          <select id="backgroundImageRepeat" [(ngModel)]="card.backgroundImageRepeat" class="form-control">
+          <select id="backgroundImageRepeat" [(ngModel)]="card.backgroundImageRepeat" (ngModelChange)="cardUpdated()" class="form-control">
             <option value="no-repeat">No Repeat</option>
             <option value="repeat">Repeat</option>
           </select>
@@ -85,6 +118,93 @@ asdfasd
 
 
 
+    </div>
+    <div *ngIf="activeTab=='elementProperty' && cardElement">
+      <div id="element-property-editor" class="p-3">
+        <div class="form-group mb-2">
+          <label for="elementName">Element Name:</label>
+          <input type="text" id="elementName" [(ngModel)]="cardElement.name" (ngModelChange)="cardUpdated()" class="form-control">
+        </div>
+
+        <div class="form-group mb-2">
+          <label for="dataType">Data Type:</label>
+          <select id="dataType" [(ngModel)]="cardElement.dataType" (ngModelChange)="cardUpdated()" class="form-control">
+            <option value="static">Static</option>
+            <option value="dynamic">Dynamic</option>
+          </select>
+        </div>
+
+        <div class="row">
+          <div class="col-6">
+            <div class="form-group mb-2">
+              <label for="positionX">X Position:</label>
+              <input type="number" id="positionX" [(ngModel)]="cardElement.positionX" (ngModelChange)="cardUpdated()" class="form-control">
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-group mb-2">
+              <label for="positionY">Y Position:</label>
+              <input type="number" id="positionY" [(ngModel)]="cardElement.positionY" (ngModelChange)="cardUpdated()" class="form-control">
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-group mb-2">
+              <label for="width">Width:</label>
+              <input type="number" id="width" [(ngModel)]="cardElement.width" (ngModelChange)="cardUpdated()" class="form-control">
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-group mb-2">
+              <label for="height">Height:</label>
+              <input type="number" id="height" [(ngModel)]="cardElement.height" (ngModelChange)="cardUpdated()" class="form-control">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group mb-2" *ngIf="cardElement.dataType === 'static'">
+          <label for="text">Text:</label>
+          <input type="text" id="text" [(ngModel)]="cardElement.text" (ngModelChange)="cardUpdated()" class="form-control">
+        </div>
+
+        <div class="form-group mb-2" *ngIf="cardElement.dataType === 'dynamic'">
+          <label for="dataField">Data Field:</label>
+          <select type="text" id="dataField" [(ngModel)]="cardElement.dataField" (ngModelChange)="cardUpdated()" class="form-control">
+            <option *ngFor="let field of dataFields" [value]="field">{{ field }}</option>
+          </select>
+        </div>
+        <div *ngIf="cardElement.type === 'text'">
+
+
+
+          <div class="form-group mb-2">
+            <label for="fontSize">Font Size:</label>
+            <input type="number" id="fontSize" [(ngModel)]="cardElement.fontSize" (ngModelChange)="cardUpdated()" class="form-control">
+          </div>
+
+          <div class="form-group mb-2">
+            <label for="fontFamily">Font Family:</label>
+            <select id="fontFamily" [(ngModel)]="cardElement.fontFamily" (ngModelChange)="cardUpdated()" class="form-control">
+              <option value="Arial">Arial</option>
+              <option value="Times New Roman">Times New Roman</option>
+              <option value="Courier New">Courier New</option>
+              <option value="Verdana">Verdana</option>
+            </select>
+          </div>
+
+          <div class="form-group mb-2">
+            <label for="fontColor">Font Color:</label>
+            <input type="color" id="fontColor" [(ngModel)]="cardElement.fontColor" (ngModelChange)="cardUpdated()" class="form-control form-control-color">
+          </div>
+
+          <div class="form-group mb-2">
+            <label for="fontWeight">Font Weight:</label>
+            <select id="fontWeight" [(ngModel)]="cardElement.fontWeight" (ngModelChange)="cardUpdated()" class="form-control">
+              <option value="normal">Normal</option>
+              <option value="bold">Bold</option>
+            </select>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

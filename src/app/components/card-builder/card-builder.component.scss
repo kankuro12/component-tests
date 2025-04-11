@@ -31,11 +31,30 @@
   }
   .left-section{
     width:300px;
-    background-color: aquamarine;
+    background-color: rgb(255, 255, 255);
     position: fixed;
     top: 0;
     left: 0;
     bottom: 0;
+    border-right: 1px solid #ccc;
+    .input-card{
+      cursor: pointer;
+      margin-top: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding:10px;
+      .input-item{
+          text-align: center;
+          span{
+              display: block;
+          }
+      }
+
+      &:hover{
+          background-color: #808080;
+          color:white;
+      }
+  }
   }
 
   .right-section{
@@ -54,6 +73,15 @@
     left: 300px;
     right: 300px;
     bottom: 0;
-    background-color: white
+    background-color: white;
+    #canvas{
+      overflow: hidden;
+      .card-element{
+        img{
+          height: 100%;
+          width: 100%;
+        }
+      }
+    }
   }
 }
