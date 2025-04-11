@@ -4,10 +4,11 @@ import { CommonModule } from '@angular/common';
 import { CardElement, CardModel } from './CardModel';
 import { FormsModule } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
+import { ResizeDirective } from './resize.directive';
 
 @Component({
   selector: 'app-card-builder',
-  imports: [DraggableDirective,CommonModule,FormsModule],
+  imports: [DraggableDirective,ResizeDirective,CommonModule,FormsModule],
   templateUrl: './card-builder.component.html',
   styleUrl: './card-builder.component.scss'
 })
