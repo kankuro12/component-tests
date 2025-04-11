@@ -33,6 +33,9 @@ export class CardElement{
 
   data : studentCardModel = new studentCardModel();
 
+  getText(){
+    return this.dataType === 'static' ? this.text : this.data.getData(this.dataField);
+  }
   getImageUrl(){
     return this.dataType === 'static' ? this.text : this.data.getData(this.dataField);
   }

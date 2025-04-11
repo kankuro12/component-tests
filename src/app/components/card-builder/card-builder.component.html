@@ -32,7 +32,7 @@
     <div id="canvas" [style]="card.toCss()">
       <div appDraggable *ngFor="let element of card.elements" [style]="element.toCss()" (click)="selectElement(element)"
         class="card-element" [ngClass]="{ 'selected': cardElement === element }" (dragEnd)="onDragEnd($event, element)">
-        <div *ngIf="element.type === 'text'">{{ element.text }}</div>
+        <div *ngIf="element.type === 'text'">{{ element.getText()}}</div>
         <img *ngIf="element.type === 'image'" [src]="element.getImageUrl()" [alt]="element.getImageUrl()" />
       </div>
     </div>
